@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+
+<!-- Auto Generated with Sencha Architect -->
+<!-- Modifications to this file will be overwritten. -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Prodoo</title>
+    
+    <script>
+      
+        var Ext = Ext || {};
+        Ext.theme = {
+            name: "Windows"
+        };
+    </script>
+	<style>
+		body{
+			background:#3e335e;	
+		}
+		.preLoader{
+			margin: 100px auto 0;
+			text-align:center;
+		}
+		.preLoader div{
+			margin-bottom:20px;
+		}
+	    .helpIcon {
+	    bottom: 270px !important;
+        }
+	    .confirmed .msgDesc {
+            color: #65bc50
+	    }
+        .confirmed:before {
+            content: '';
+            width: 13px;
+            height: 13px;
+            position: absolute;
+            background-color: #65bc50;
+            left: 84px;
+            top: 48%;
+            border-radius: 50%;
+        }
+	</style>
+    <script src="touch/sencha-touch-all.js"></script>
+	<link rel="stylesheet" href="resources/css/sencha-touch-2ea0ca2b-3ac0-4c5c-aec0-312498e70362.css">
+    <link rel="stylesheet" href="resources/css/style.css">
+    <script src="jquery-1.11.3.min.js"></script>
+   
+    <script type="text/javascript" src="app.js"></script>
+	     <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+                api_key: 77ebtpvngdtfgt
+                onLoad: onLinkedInLoad
+				authorize: true
+         </Script>
+
+        <script>
+
+            function onLinkedInLoad() {
+                //IN.Event.on(IN, 'auth', onLinedInAuth);
+            }
+            function onLinedInAuth() {
+                IN.API.Profile('me') .fields(["id", "firstName", "lastName", "emailAddress"]).result(displayProfiles);
+            }
+            function invite() {
+
+                var url = '/people/~/mailbox',
+                    body = {
+                        recipients: {
+                            values: [{
+                                person: {
+                                    _path: '/people/email=a_user@domain.com',
+                                    'first-name': 'Andrew',
+                                    'last-name': 'User'
+                                }
+                            }]
+                        },
+                        subject: 'Invitation to connect.',
+                        body: 'Say yes!',
+                        'item-content': {
+                            'invitation-request': {
+                                'connect-type': 'friend'
+                            }
+                        }
+                    };
+                IN.API.Raw()
+                    .url(url)
+                    .method("POST")
+                    .body(JSON.stringify(body))
+                    .result(function (result) {
+                        console.log(result);
+                    })
+                    .error(function (error) {
+                        console.log(error);
+                    });
+            }
+
+            
+</script>
+
+</head>
+<body>
+
+<div id="preLoader" class="preLoader">
+	<div><img class="loaderImage" src="resources/images/logo.png" alt="logo"></div>
+	<div><img class="loaderImage" src="resources/images/loader1.GIF" alt="loader"></div>
+</div>
+<script>
+//fb appId: 113850725626284
+function login(){
+alert('login');
+}
+</script></body>
+</html>
