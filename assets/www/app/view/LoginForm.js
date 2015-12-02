@@ -143,7 +143,15 @@ Ext.define('ProDooMobileApp.view.LoginForm', {
                                 cls: 'linkedinBtn',
                                 itemId: 'linkedinBtn',
                                 text: 'Login with linked in'
-                            }
+                            },
+							{
+                                xtype: 'button',
+                                flex: 1,
+                                cls: '',
+                                itemId: 'logoutBtn',
+                                text: 'Logout'
+                            },
+							 
                         ]
                     },
                     {
@@ -170,6 +178,11 @@ Ext.define('ProDooMobileApp.view.LoginForm', {
                 fn: 'onLinkedinBtnTap',
                 event: 'tap',
                 delegate: '#linkedinBtn'
+            },
+			{
+                fn: 'onfacebooklogoutTap',
+                event: 'tap',
+                delegate: '#logoutBtn'
             }
         ]
     },
@@ -182,6 +195,10 @@ Ext.define('ProDooMobileApp.view.LoginForm', {
         G.externalLogin('Facebook');
     },
 
+	onfacebooklogoutTap: function(button, e, eOpts) {
+        logoutFB();
+    },
+	
     onLinkedinBtnTap: function(button, e, eOpts) {
         G.externalLogin('LinkedIn');
 
