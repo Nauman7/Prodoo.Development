@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <!-- Auto Generated with Sencha Architect -->
 <!-- Modifications to this file will be overwritten. -->
@@ -45,7 +45,7 @@
     <script src="touch/sencha-touch-all.js"></script>
 	<link rel="stylesheet" href="resources/css/sencha-touch-2ea0ca2b-3ac0-4c5c-aec0-312498e70362.css">
     <link rel="stylesheet" href="resources/css/style.css">
-    <script src="jquery-1.11.3.min.js"></script>
+    <script src="lib/jquery-1.9.1.min.js"></script>
    
     <script type="text/javascript" src="app.js"></script>
 	     <script type="text/javascript" src="http://platform.linkedin.com/in.js">
@@ -105,14 +105,99 @@
 	<div><img class="loaderImage" src="resources/images/logo.png" alt="logo"></div>
 	<div><img class="loaderImage" src="resources/images/loader1.GIF" alt="loader"></div>
 </div>
-<script>
-//fb appId: 113850725626284
-function login(){
-alert('login');
-}
 
-function logoutFB(){
-alert('logout from facebook');
-}
-</script></body>
+
+
+ <div id="data"></div>
+
+	<script src="cordova.js"></script>
+
+	<script src="cdv-plugin-fb-connect.js"></script>
+
+	<script src="facebook-js-sdk.js"></script>
+
+
+	<script>
+  // This is called with the results from from FB.getLoginStatus().
+  	 //openFB.init({appId: '113850725626284'});
+  
+     FB.Event.subscribe('auth.login', function(response) {
+         console.log('login event:' + JSON.stringify(response));
+     });
+
+  
+  	// openFB.init("184279531916736", "http://localhost/www/index.html");
+  	 
+ 	function login() {
+ 		// alert('Hello FB');
+         FB.login( function(response) {
+            
+            if (response.authResponse) {
+                 alert('logged in now');
+                 console.log('login response:' + response.authResponse);
+                 me();
+            } else {
+                 //alert('not logged in on login');
+                 console.log('login response:' + response.error);
+            }
+            },
+            { scope: "email" }
+            ); 
+    }
+
+    function me() {
+        FB.api('/me?fields=picture,name,email', function(user) {
+              console.log('response from facebook: ' + JSON.stringify(user));
+              var profilePictureUrl = '';
+              if (user.picture.data) {
+                profilePictureUrl = user.picture.data.url;
+              } else {
+                profilePictureUrl = user.picture;
+              }
+              console.log('userId: ' + user.id);
+              console.log('name: ' + user.name);
+              console.log('email: ' + user.email);
+              console.log('picture url: ' + profilePictureUrl);
+
+              $('#log').html("Response From FB: "+JSON.stringify(user));
+              
+            //  $('#log').html("Name: "+user.name);
+             // $('#log').html(user.email);
+            //  $('#log').html(user.picture);
+
+          });
+  }
+  
+  function logoutFB() {
+      FB.logout(function(response) {
+          console.log('logout response:' + JSON.stringify(response));
+          $('#log').html("");
+          alert('logged out');
+      });
+  }
+
+  
+   document.addEventListener('deviceready', function() {
+      try {
+          alert('Device is ready! Make sure you set your app_id below this alert.');
+          FB.init({ 
+            appId: "172950399724127", 
+            nativeInterface: CDV.FB, 
+            useCachedDialogs: false 
+          });
+          document.getElementById('data').innerHTML = "";
+      } catch (e) {
+          alert(e);
+      }
+  }, false);
+
+  $(document).on("ready", function () {
+      $('#log').html('Facebook Plugin loaded');
+
+  }); 
+
+
+</script>
+<div id="log"></div>
+</body>
 </html>
